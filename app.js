@@ -10,7 +10,7 @@ $(document).ready( function() {
 	$('.inspiration-getter').submit(function(event){
 		$('.results').html('');
 		// get the value of the tags the user submitted
-		var tags = $(this).find("input[name='tags']").val();
+		var tags = $(this).find("input[name='answerers']").val();
 		console.log(tags);
 		getTopAnswerers(tags);
 	});
@@ -63,6 +63,7 @@ var showAnswerer = function(user){
 	//set the link property in result
 	var link = result.find(".link a");
 	link.attr('href', user.user.link);
+	link.text(user.user.link);
 
 	//set the post count property in result
 	var count = result.find(".count");
@@ -126,18 +127,18 @@ var getUnanswered = function(tags) {
 var getTopAnswerers = function(tags){
 	console.log(tags);
 
-   var request = {tagged: tags, 		
+   var request = {tag: tags, 		
 					period: 'all_time'};
 
    var result = $.ajax({
-				url: "http://api.stackexchange.com/2.2/tags/html/top-answerers/all_time?site=stackoverflow",
+				url: "http://api.stackexchange.com/2.2/tags/" + request.tag + "/top-answerers/" + request.period + "?site=stackoverflow",
 				data: request,
 				dataType: "jsonp",
 				type: "GET",
 			})
 		.done(function(result){
 			//searchresults, 
-			var searchResults = showSearchResults(request.tagged, result.items.length);
+			var searchResults = showSearchResults(request.tag, result.items.length);
 			$('.search-results').html(searchResults);
 
 			$.each(result.items, function(i, item) {
