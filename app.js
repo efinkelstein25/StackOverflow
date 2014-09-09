@@ -126,7 +126,7 @@ var getUnanswered = function(tags) {
 var getTopAnswerers = function(tags){
 	console.log(tags);
 
-var request = {tagged: tags, 		
+   var request = {tagged: tags, 		
 					period: 'all_time'};
 
    var result = $.ajax({
